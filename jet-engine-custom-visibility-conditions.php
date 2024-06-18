@@ -35,7 +35,8 @@ function jet_engine_cvc() {
 		require JET_ECVC_PATH . 'user-meta.php';
 		require JET_ECVC_PATH . 'user-has-fields.php';
 		require JET_ECVC_PATH . 'user-meta-is-post-meta.php';
-		
+		require JET_ECVC_PATH . 'is-home.php';
+		require JET_ECVC_PATH . 'is-front-page.php';
 
 		$conditions_manager->register_condition( new Jet_Engine_CVC\Post_Status() );
 		$conditions_manager->register_condition( new Jet_Engine_CVC\Post_By_User() );
@@ -43,7 +44,18 @@ function jet_engine_cvc() {
 		$conditions_manager->register_condition( new Jet_Engine_CVC\User_Meta_Is() );
 		$conditions_manager->register_condition( new Jet_Engine_CVC\User_Has_Fields() );
 		$conditions_manager->register_condition( new Jet_Engine_CVC\User_Meta_Is_Post_Meta() );
+		$conditions_manager->register_condition( new Jet_Engine_CVC\Is_Home() );
+		$conditions_manager->register_condition( new Jet_Engine_CVC\Is_Front_page() );
 
+	} );
+
+	add_filter( 'jet-engine/modules/dynamic-visibility/conditions/groups', function ( $groups ) {
+		$groups['pages'] = array(
+			'label' => __( 'Pages', 'jet-engine' ),
+			'options' => array(),
+		);
+
+		return $groups;
 	} );
 
 	add_action( 'init', function () {
